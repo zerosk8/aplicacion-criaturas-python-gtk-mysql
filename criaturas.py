@@ -12,7 +12,7 @@ class Criaturas_BD:
     usuario = 'conan'
     password = 'crom'
     base_datos = 'DBdeConan'
-    nombre_tabla = 'Criaturas'
+    nombre_tabla = 'Criatura'
     
     def __init__(self):
         self.conexion = MySQLdb.connect(host = self.host, user = self.usuario, passwd = self.password, db = self.base_datos)
@@ -26,7 +26,7 @@ class Criaturas_BD:
         
     
     def existe_tabla(self):
-        self.cursor.execute("SHOW TABLES LIKE " + self.nombre_tabla)
+        self.cursor.execute("SHOW TABLES LIKE '" + self.nombre_tabla + "'")
         
         return (self.cursor.rowcount > 0)
     
@@ -34,20 +34,21 @@ class Criaturas_BD:
         consulta = "CREATE TABLE " + self.nombre_tabla
         consulta += "(ID INT PRIMARY KEY, Nombre VARCHAR(100), Elemento VARCHAR(10), "
         consulta += "Ataque INT, Defensa INT, Velocidad INT)"
+        self.cursor.execute(consulta)
         
-        self.cursor.execute()
         self.conexion.commit()
     
     def obtener_siguiente_id(self):
         self.cursor.execute("SELECT id FROM " + self.nombre_tabla)
-        num_tuplas = len(self.cursor.fetchall())
         
-        return num_tuplas + 1
+        return len(self.cursor.fetchall()) + 1
     
     def insertar_criatura(self, nombre, elemento, ataque, defensa, velocidad):
-        consulta = "INSERT INTO " + self.nombre_tabla + " VALUES(" + self.id + ",'" + nombre + "', '"
-        consulta += elemento + "', " + ataque + ", " + defensa + ", " + velocidad + ")"
+        consulta = "INSERT INTO " + self.nombre_tabla + " VALUES(" + str(self.id) + ",'" + nombre + "', "
+        consulta += "'" + elemento + "', " + str(ataque) + ", " + str(defensa) + ", " + str(velocidad) + ")"
         self.cursor.execute(consulta)
+        
+        self.conexion.commit()
         
         if self.cursor.rowcount == 1:
             self.id += 1
@@ -58,22 +59,25 @@ class Criaturas_BD:
         return exito
     
     def seleccionar_criatura(self, id):
-        self.cursor.execute("SELECT FROM " + self.nombre_tabla + " WHERE ID = " + str(id))
+        self.cursor.execute("SELECT * FROM " + self.nombre_tabla + " WHERE ID = " + str(id))
         
         return self.cursor.fetchone()
     
     def actualizar_criatura(self, id, nombre, elemento, ataque, defensa, velocidad):
         consulta = "UPDATE " + self.nombre_tabla + " SET Nombre = '" + nombre + "', "
-        consulta += "Elemento = '" + elemento + "', Ataque = " + ataque + ", "
-        consulta += "Defensa = " + defensa + ", Velocidad = " + velocidad + " "
-        consulta += "WHERE ID = " + id
-        
+        consulta += "Elemento = '" + elemento + "', Ataque = " + str(ataque) + ", "
+        consulta += "Defensa = " + str(defensa) + ", Velocidad = " + str(velocidad) + " "
+        consulta += "WHERE ID = " + str(id)
         self.cursor.execute(consulta)
+        
+        self.conexion.commit()
         
         return (self.cursor.rowcount == 1)
     
-    def eliminar_criatura(self, id)
-        consulta = "DELETE FROM " + self.nombre_tabla + " WHERE ID = " + id
+    def eliminar_criatura(self, id):
+        self.cursor.execute("DELETE FROM " + self.nombre_tabla + " WHERE ID = " + str(id))
+        
+        self.conexion.commit()
         
         return (self.cursor.rowcount == 1)
     
@@ -82,5 +86,10 @@ class Criaturas_BD:
         self.conexion.close()
 
 if __name__ == '__main__':
-	criaturas = Criaturas_GUI()
-    
+    criaturas = Criaturas_BD()
+    criaturas.insertar_criatura("nombre", "elemento", 0, 0, 0)
+    criaturas.actualizar_criatura(1, "Laura", "Agua", 1, 2, 3)
+    criaturas.seleccionar_criatura(1)
+    criaturas.eliminar_criatura(1)
+    criaturas.seleccionar_criatura(1)
+    criaturas.cerrar_conexion()

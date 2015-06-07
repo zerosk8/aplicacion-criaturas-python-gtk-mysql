@@ -95,16 +95,18 @@ class Criaturas_GUI:
         # Conexion a la interfaz
         self.builder = Gtk.Builder()
         self.builder.add_from_file("critaturas.glade")
-        self.handlers = {"onExit": Gtk.main_quit,
+        self.handlers = { "onExit": Gtk.main_quit,
                         "onMenuCreate": self.onMenuCreate,
 						"onMenuSelect": self.onMenuSelect,
                         "onMenuUpdate": self.onMenuUpdate,
                         "onMenuDelete": self.onMenuDelete,
                         "onActionButton": self.onActionButton,
                         "onAboutDialog": self.onAboutDialog,
-						"onCloseAbout": self.onCloseAbout}
+						"onCloseAbout": self.onCloseAbout,
+                        "onClosePopUp": self.onClosePopUp,
+                        "onIdChanged": self.onIdChanged
+                        }
         
-        self.inicializar_combo_boxes()
         self.actualizar_combo_box_id()
         
         self.builder.connect_signals(self.handlers)
@@ -115,19 +117,6 @@ class Criaturas_GUI:
         self.menu = "Crear"
         campo = self.builder.get_object("comboBoxId")
         campo.set_sensitive(False)
-    
-    def inicializar_combo_boxes(self):
-        renderer_text = Gtk.CellRendererText()
-        combobox = self.builder.get_object("comboBoxId")
-        combobox.pack_start(renderer_text, True)
-        combobox.add_attribute(renderer_text, "text", 0)
-        print combobox.get_entry_text_column()
-        
-        renderer_text = Gtk.CellRendererText()
-        combobox = self.builder.get_object("comboBoxElemento")
-        combobox.pack_start(renderer_text, True)
-        combobox.add_attribute(renderer_text, "text", 0)
-        print combobox.get_entry_text_column()
     
     def actualizar_combo_box_id(self):
         combobox = self.builder.get_object("comboBoxId")
@@ -141,7 +130,7 @@ class Criaturas_GUI:
             
     
     def onMenuCreate(self, menu):
-        self.limpiar_campos()
+        self.limpiar_datos_criatura()
         self.menu = menu.get_label()
         
         campo = self.builder.get_object("labelTitulo")
@@ -158,14 +147,14 @@ class Criaturas_GUI:
         campo = self.builder.get_object("comboBoxElemento")
         campo.set_sensitive(True)
         campo = self.builder.get_object("spinButtonAtaque")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         campo = self.builder.get_object("spinButtonDefensa")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         campo = self.builder.get_object("spinButtonVelocidad")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         
     def onMenuSelect(self, menu):
-        self.limpiar_campos()
+        self.limpiar_datos_criatura()
         self.menu = menu.get_label()
         
         campo = self.builder.get_object("labelTitulo")
@@ -182,14 +171,14 @@ class Criaturas_GUI:
         campo = self.builder.get_object("comboBoxElemento")
         campo.set_sensitive(False)
         campo = self.builder.get_object("spinButtonAtaque")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
         campo = self.builder.get_object("spinButtonDefensa")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
         campo = self.builder.get_object("spinButtonVelocidad")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
         
     def onMenuUpdate(self, menu):
-        self.limpiar_campos()
+        self.limpiar_datos_criatura()
         self.menu = menu.get_label()
         
         campo = self.builder.get_object("labelTitulo")
@@ -206,14 +195,14 @@ class Criaturas_GUI:
         campo = self.builder.get_object("comboBoxElemento")
         campo.set_sensitive(True)
         campo = self.builder.get_object("spinButtonAtaque")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         campo = self.builder.get_object("spinButtonDefensa")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         campo = self.builder.get_object("spinButtonVelocidad")
-        campo.set_sensitive(True)
+        campo.set_property('editable', True)
         
     def onMenuDelete(self, menu):
-        self.limpiar_campos()
+        self.limpiar_datos_criatura()
         self.menu = menu.get_label()
         
         campo = self.builder.get_object("labelTitulo")
@@ -230,11 +219,17 @@ class Criaturas_GUI:
         campo = self.builder.get_object("comboBoxElemento")
         campo.set_sensitive(False)
         campo = self.builder.get_object("spinButtonAtaque")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
         campo = self.builder.get_object("spinButtonDefensa")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
         campo = self.builder.get_object("spinButtonVelocidad")
-        campo.set_sensitive(False)
+        campo.set_property('editable', False)
+        
+    def onIdChanged(self, combo_box):
+        if (self.menu == "Actualizar" or self.menu == "Eliminar") and combo_box.get_active() != -1:
+            self.rellenar_datos_criatura(combo_box.get_active_text())
+        elif (self.menu == "Actualizar" or self.menu == "Eliminar") and combo_box.get_active() == -1:
+            self.limpiar_datos_criatura()
         
     def onActionButton(self, boton):
         if self.menu == "Crear":
@@ -244,39 +239,74 @@ class Criaturas_GUI:
             defensa = self.builder.get_object("spinButtonDefensa")
             velocidad = self.builder.get_object("spinButtonVelocidad")
             
-            self.tabla_bd.insertar_criatura(nombre.get_text(), elemento.get_active_text(), ataque.get_value_as_int(), defensa.get_value_as_int(), velocidad.get_value_as_int())
-            
-            self.limpiar_campos()
-            self.actualizar_combo_box_id()
+            if nombre.get_text() == "" or elemento.get_active() == -1:
+                titulo = "Advertencia"
+                mensaje = "Por favor, indique el nombre y el elemento de la criatura"
+                self.mostrar_pop_up(titulo, mensaje)
+            else:
+                self.tabla_bd.insertar_criatura(nombre.get_text(), elemento.get_active_text(), ataque.get_value_as_int(), defensa.get_value_as_int(), velocidad.get_value_as_int())
+                
+                titulo = "Información"
+                mensaje = "Se ha creado la información de la criatura"
+                self.mostrar_pop_up(titulo, mensaje)
+                
+                self.limpiar_datos_criatura()
+                self.actualizar_combo_box_id()
         elif self.menu == "Obtener":
             id = self.builder.get_object("comboBoxId")
             
-            criatura = self.tabla_bd.seleccionar_criatura(id.get_active_text())
-            nombre = self.builder.get_object("entryNombre")
-            nombre.set_text(criatura["Nombre"])
-            elemento = self.builder.get_object("comboBoxElemento")
-            elemento.set_active_id(self.obtener_indice_elemento_combo_box(criatura["Elemento"]))
-            ataque = self.builder.get_object("spinButtonAtaque")
-            ataque.set_value(criatura["Ataque"])
-            defensa = self.builder.get_object("spinButtonDefensa")
-            defensa.set_value(criatura["Defensa"])
-            velocidad = self.builder.get_object("spinButtonVelocidad")
-            velocidad.set_value(criatura["Velocidad"])
+            if id.get_active() == -1:
+                titulo = "Advertencia"
+                mensaje = "Por favor, seleccione el número identificador de la criatura para consultar sus datos"
+                self.mostrar_pop_up(titulo, mensaje)
+            else:
+                self.rellenar_datos_criatura(id.get_active_text())
         elif self.menu == "Actualizar":
             id = self.builder.get_object("comboBoxId")
-            nombre = self.builder.get_object("entryNombre")
-            elemento = self.builder.get_object("comboBoxElemento")
-            ataque = self.builder.get_object("spinButtonAtaque")
-            defensa = self.builder.get_object("spinButtonDefensa")
-            velocidad = self.builder.get_object("spinButtonVelocidad")
             
-            self.tabla_bd.actualizar_criatura(id.get_active_text(), nombre.get_text(), elemento.get_active_text(), ataque.get_value_as_int(), defensa.get_value_as_int(), velocidad.get_value_as_int())
+            if id.get_active() == -1:
+                titulo = "Advertencia"
+                mensaje = "Por favor, seleccione el número identificador de la criatura para actualizar sus datos"
+                self.mostrar_pop_up(titulo, mensaje)
+            else:
+                nombre = self.builder.get_object("entryNombre")
+                elemento = self.builder.get_object("comboBoxElemento")
+                ataque = self.builder.get_object("spinButtonAtaque")
+                defensa = self.builder.get_object("spinButtonDefensa")
+                velocidad = self.builder.get_object("spinButtonVelocidad")
+                
+                self.tabla_bd.actualizar_criatura(id.get_active_text(), nombre.get_text(), elemento.get_active_text(), ataque.get_value_as_int(), defensa.get_value_as_int(), velocidad.get_value_as_int())
+                
+                titulo = "Información"
+                mensaje = "Se ha actualizado la información de la criatura"
+                self.mostrar_pop_up(titulo, mensaje)
         elif self.menu == "Eliminar":
             id = self.builder.get_object("comboBoxId")
             
-            self.tabla_bd.eliminar_criatura(id.get_active_text())
-            
-            self.actualizar_combo_box_id()
+            if id.get_active() == -1:
+                titulo = "Advertencia"
+                mensaje = "Por favor, seleccione el número identificador de la criatura para eliminar sus datos"
+                self.mostrar_pop_up(titulo, mensaje)
+            else:
+                self.tabla_bd.eliminar_criatura(id.get_active_text())
+                
+                titulo = "Información"
+                mensaje = "Se ha eliminado la información de la criatura"
+                self.mostrar_pop_up(titulo, mensaje)
+                
+                self.actualizar_combo_box_id()
+        
+    def onAboutDialog(self, *args):
+        self.acerca_de = self.builder.get_object("acercaDe")
+        self.acerca_de.show_all()
+        
+    def onCloseAbout(self, *args):
+        self.acerca_de = self.builder.get_object("acercaDe")
+        self.acerca_de.hide()
+    
+    def onClosePopUp(self, *args):
+        self.pop_up = self.builder.get_object("popUp")
+        self.pop_up.hide()
     
     def obtener_indice_elemento_combo_box(self, elemento):
         if elemento == "Aire":
@@ -287,8 +317,8 @@ class Criaturas_GUI:
             return "2"
         elif elemento == "Tierra":
             return "3"
-    
-    def limpiar_campos(self):
+        
+    def limpiar_datos_criatura(self):
         campo = self.builder.get_object("comboBoxId")
         campo.set_active(-1)
         campo = self.builder.get_object("entryNombre")
@@ -302,12 +332,29 @@ class Criaturas_GUI:
         campo = self.builder.get_object("spinButtonVelocidad")
         campo.set_value(-1)
     
-    def onAboutDialog(self, *args):
-        self.acerca_de = self.builder.get_object("acercaDe")
-        self.acerca_de.show_all()
-    def onCloseAbout(self, *args):
-        self.acerca_de = self.builder.get_object("acercaDe")
-        self.acerca_de.hide()
+    def mostrar_pop_up(self, titulo, mensaje):
+        campo = self.builder.get_object("tituloPopUp")
+        campo.set_text(titulo)
+        
+        campo = self.builder.get_object("mensajePopUp")
+        campo.set_text(mensaje)
+        
+        self.pop_up = self.builder.get_object("popUp")
+        self.pop_up.show_all()
+    
+    def rellenar_datos_criatura(self, id):
+        criatura = self.tabla_bd.seleccionar_criatura(id)
+        
+        nombre = self.builder.get_object("entryNombre")
+        nombre.set_text(criatura["Nombre"])
+        elemento = self.builder.get_object("comboBoxElemento")
+        elemento.set_active_id(self.obtener_indice_elemento_combo_box(criatura["Elemento"]))
+        ataque = self.builder.get_object("spinButtonAtaque")
+        ataque.set_value(criatura["Ataque"])
+        defensa = self.builder.get_object("spinButtonDefensa")
+        defensa.set_value(criatura["Defensa"])
+        velocidad = self.builder.get_object("spinButtonVelocidad")
+        velocidad.set_value(criatura["Velocidad"])
 
 def main():
     ventana_criaturas = Criaturas_GUI()
@@ -316,12 +363,4 @@ def main():
     return 0
 
 if __name__ == '__main__':
-    #criaturas = Criaturas_BD()
-    #criaturas.insertar_criatura("nombre", "elemento", 0, 0, 0)
-    #criaturas.actualizar_criatura(1, "Laura", "Agua", 1, 2, 3)
-    #criaturas.seleccionar_criatura(1)
-    #criaturas.eliminar_criatura(1)
-    #criaturas.seleccionar_criatura(1)
-    #criaturas.cerrar_conexion()
-    
     main()

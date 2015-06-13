@@ -36,9 +36,12 @@ class Criaturas_BD:
     
     def obtener_siguiente_id(self):
         self.cursor.execute("SELECT MAX(ID) AS ID FROM " + self.nombre_tabla)
-        id = self.cursor.fetchone()
+        tupla = self.cursor.fetchone()
         
-        return id["ID"] + 1
+        if tupla["ID"] != None:
+            return tupla["ID"] + 1
+        else:
+            return 1
     
     def insertar_criatura(self, nombre, elemento, ataque, defensa, velocidad):
         consulta = "INSERT INTO " + self.nombre_tabla + " VALUES(" + str(self.id) + ",'" + nombre + "', "

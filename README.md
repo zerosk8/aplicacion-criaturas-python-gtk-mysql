@@ -37,7 +37,7 @@ Si no tiene acceso a un servidor de bases de datos con esta configuración, pued
     base de datos, usuario, table, etc... Para realizar esto puede modificar los valores asociados a las 
     variables que se encuentran entre las líneas 7 y 10 del fichero **"criaturas.py"**.
 
-# 2. Demo
+# 2. Capturas de pantalla
 
 ![GUI obtención de criatura](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_obtencion_criatura.png)
 

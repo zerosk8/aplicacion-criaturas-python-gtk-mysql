@@ -29,7 +29,7 @@ Si no tiene acceso a un servidor de bases de datos con esta configuración, pued
 
     `$ > mysql --user="<usuario>" --password="<password>" < "<directorio_fichero_sql>/configurar_bd.sql"`
 
-    O, si ya se ha iniciado la sesión en la consola de comandos del sistema gestor de bases de datos:
+    Si ya se ha iniciado la sesión en la consola de comandos del sistema gestor de bases de datos:
 
     `mysql> source "<directorio_fichero_sql>/configurar_bd.sql";`
 
@@ -60,3 +60,5 @@ Si no tiene acceso a un servidor de bases de datos con esta configuración, pued
 ![GUI eliminación de criatura, mensaje de advertencia](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_eliminacion_criatura_mensaje_advertencia.png)
 
 ![GUI eliminación de criatura, mensaje de éxito](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_eliminacion_criatura_mensaje_exito.png)
+
+![GUI acerca de](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_acerca_de.png)

@@ -251,13 +251,13 @@ class Criaturas_GUI:
         campo.set_value(-1)
     
     def mostrar_pop_up(self, titulo, mensaje):
-        campo = self.builder.get_object("tituloPopUp")
-        campo.set_text(titulo)
+        popUpWindow = self.builder.get_object("popUp")
+        popUpWindow.set_title(titulo)
         
         campo = self.builder.get_object("mensajePopUp")
         campo.set_text(mensaje)
         
-        self.pop_up = self.builder.get_object("popUp")
+        self.pop_up = popUpWindow
         self.pop_up.show_all()
     
     def rellenar_datos_criatura(self, id):

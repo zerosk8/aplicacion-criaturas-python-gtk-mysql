@@ -1,11 +1,11 @@
 # aplicacion-criaturas-python-gtk-mysql
 Programación Avanzada en Python: Aplicación gráfica para gestionar la información de criaturas en una base de datos usando **Python**, **Mysql** y **GTK+**
 
-# Requisitos
+# 1. Requisitos
 * **Python 3**
 * Librerías **GTK+ 3** y **PyGObject**
 
-# Base de datos
+## 1.2 Base de datos
 
 Para ejecutar la aplicación correctamente es necesario tener configurado un servidor de base de datos, preferiblemente "MySQL Server", con las siguientes características:
 
@@ -36,3 +36,27 @@ Si no tiene acceso a un servidor de bases de datos con esta configuración, pued
 2.  **Editar** la configuración de **conexión a la base de datos**, de manera que pueda usar su propia 
     base de datos, usuario, table, etc... Para realizar esto puede modificar los valores asociados a las 
     variables que se encuentran entre las líneas 7 y 10 del fichero **"criaturas.py"**.
+
+# 2. Demo
+
+![GUI obtención de criatura](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_obtencion_criatura.png)
+
+![GUI obtención de criatura, mensaje de advertencia](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_obtencion_criatura_mensaje_advertencia.png)
+
+![GUI creacion de criatura](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_creacion_criatura.png)
+
+![GUI creacion de criatura, mensaje de advertencia](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_creacion_criatura_mensaje_advertencia.png)
+
+![GUI creacion de criatura, mensaje de éxito](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_creacion_criatura_mensaje_exito.png)
+
+![GUI actualización de criatura](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_actualizacion_criatura.png)
+
+![GUI actualización de criatura, mensaje de advertencia](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_actualizacion_criatura_mensaje_advertencia.png)
+
+![GUI actualización de criatura, mensaje de éxito](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_actualizacion_criatura_mensaje_exito.png)
+
+![GUI eliminación de criatura](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_eliminacion_criatura.png)
+
+![GUI eliminación de criatura, mensaje de advertencia](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_eliminacion_criatura_mensaje_advertencia.png)
+
+![GUI eliminación de criatura, mensaje de éxito](https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql/blob/master/documentacion/imagenes/gui_eliminacion_criatura_mensaje_exito.png)

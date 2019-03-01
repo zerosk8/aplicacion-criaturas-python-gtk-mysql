@@ -29,14 +29,11 @@
       <object class="GtkBox" id="contenedor">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="margin_left">10</property>
-        <property name="margin_right">10</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkMenuBar" id="menu">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_bottom">19</property>
             <child>
               <object class="GtkMenuItem" id="menuItemArchivo">
                 <property name="visible">True</property>
@@ -136,14 +133,30 @@
           </packing>
         </child>
         <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkBox" id="box2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">20</property>
+            <property name="margin_right">20</property>
+            <property name="margin_top">10</property>
+            <property name="margin_bottom">10</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="labelTitulo">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_bottom">10</property>
                 <property name="label" translatable="yes">Creación de criatura</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -160,6 +173,8 @@
               <object class="GtkLabel" id="labelDescripcion">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">10</property>
                 <property name="label" translatable="yes">Introduzca los datos para crear una nueva criatura.</property>
               </object>
               <packing>
@@ -173,6 +188,8 @@
               <object class="GtkGrid" id="gridDatosCriatura">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_top">10</property>
+                <property name="margin_bottom">10</property>
                 <property name="row_spacing">10</property>
                 <property name="column_spacing">5</property>
                 <child>
@@ -357,16 +374,15 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="margin_left">200</property>
-                <property name="margin_right">200</property>
                 <property name="margin_top">10</property>
                 <property name="margin_bottom">10</property>
+                <property name="hexpand">True</property>
                 <property name="relief">half</property>
                 <signal name="activate" handler="onActionButton" swapped="no"/>
                 <signal name="clicked" handler="onActionButton" swapped="no"/>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="padding">3</property>
                 <property name="position">3</property>
@@ -376,26 +392,34 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkStatusbar" id="barraEstado">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">10</property>
-            <property name="margin_right">10</property>
             <property name="margin_start">10</property>
             <property name="margin_end">10</property>
-            <property name="margin_top">6</property>
-            <property name="margin_bottom">6</property>
+            <property name="hexpand">True</property>
             <property name="orientation">vertical</property>
             <property name="spacing">2</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
@@ -414,18 +438,21 @@
     <property name="program_name">Criaturas</property>
     <property name="version">0.2</property>
     <property name="comments" translatable="yes">"Criaturas" es una aplicación CRUD que te permite gestionar la información de todas las bestias y animales salvajes que tienen capacidad de lucha.</property>
-    <property name="website">https://github.com/zerosk8</property>
-    <property name="website_label" translatable="yes">https://github.com/zerosk8</property>
+    <property name="website">https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql</property>
+    <property name="website_label">https://github.com/zerosk8/aplicacion-criaturas-python-gtk-mysql</property>
     <property name="authors">Alejandro Mesa Rodríguez</property>
     <property name="logo">assets/logo.png</property>
     <signal name="close" handler="onCloseAbout" swapped="no"/>
-    <signal name="response" handler="onCloseAbout" swapped="no"/>
     <child>
       <placeholder/>
     </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="aboutdialog-vbox1">
         <property name="can_focus">False</property>
+        <property name="margin_left">20</property>
+        <property name="margin_right">20</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
@@ -459,25 +486,27 @@
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
+            <property name="hexpand">True</property>
+            <property name="layout_style">expand</property>
             <child>
               <object class="GtkButton" id="closePopUp">
                 <property name="label" translatable="yes">Aceptar</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="margin_right">5</property>
-                <property name="margin_bottom">5</property>
+                <property name="hexpand">True</property>
                 <signal name="activate" handler="onClosePopUp" swapped="no"/>
                 <signal name="clicked" handler="onClosePopUp" swapped="no"/>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
@@ -485,7 +514,7 @@
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
+            <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -499,26 +528,13 @@
             <property name="margin_bottom">5</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="tituloPopUp">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Título</property>
-                <attributes>
-                  <attribute name="weight" value="bold"/>
-                  <attribute name="scale" value="2"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkLabel" id="mensajePopUp">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Mensaje</property>
+                <attributes>
+                  <attribute name="scale" value="1"/>
+                </attributes>
               </object>
               <packing>
                 <property name="expand">False</property>

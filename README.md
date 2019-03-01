@@ -24,9 +24,9 @@ Si no tiene acceso a un servidor de bases de datos con esta configuración, pued
     * Insercion de una tupla en la tabla "Criatura"
 
 Ejemplo: En un sistema operativo perteneciente a la familia GNU/Linux, con la consola de comandos "bash" y "MySQL Server", puede ejecutarse la siquiente instrucción:
-    *$ > mysql --user="<usuario>" --password="<password>" < "<directorio_fichero_sql>/configurar_bd.sql"*
+    `$ > mysql --user="<usuario>" --password="<password>" < "<directorio_fichero_sql>/configurar_bd.sql"`
 
 O, si ya se ha iniciado la sesión en la consola de comandos del sistema gestor de bases de datos:
-    *mysql> source "<directorio_fichero_sql>/configurar_bd.sql";*
+    `mysql> source "<directorio_fichero_sql>/configurar_bd.sql";`
 
 2.  **Editar** la configuración de **conexión a la base de datos**, de manera que pueda usar su propia base de datos, usuario, table, etc... Para realizar esto puede modificar los valores asociados a las variables que se encuentran entre las líneas 7 y 10 del fichero **"criaturas.py"**.

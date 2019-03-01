@@ -417,7 +417,7 @@
     <property name="website">https://github.com/zerosk8</property>
     <property name="website_label" translatable="yes">https://github.com/zerosk8</property>
     <property name="authors">Alejandro Mesa Rodríguez</property>
-    <property name="logo">recursos/imagenes/logo.png</property>
+    <property name="logo">assets/logo.png</property>
     <signal name="close" handler="onCloseAbout" swapped="no"/>
     <signal name="response" handler="onCloseAbout" swapped="no"/>
     <child>

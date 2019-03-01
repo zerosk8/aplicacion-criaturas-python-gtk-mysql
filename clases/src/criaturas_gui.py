@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from clases.criaturas_bd import Criaturas_BD
+from clases.src.criaturas_bd import Criaturas_BD
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -12,7 +12,7 @@ class Criaturas_GUI:
         
         # Conexion a la interfaz
         self.builder = Gtk.Builder()
-        self.builder.add_from_file("critaturas.glade")
+        self.builder.add_from_file("./clases/glade/critaturas.glade")
         self.handlers = { "onExit": Gtk.main_quit,
                         "onMenuCreate": self.onMenuCreate,
 						"onMenuSelect": self.onMenuSelect,
